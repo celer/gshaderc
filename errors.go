@@ -14,7 +14,7 @@
 
 package gshaderc
 
-// #cgo LDFLAGS: -lshaderc_combined -lstdc++
+// #cgo LDFLAGS: -lshaderc_combined -lstdc++ -lm
 // #include <shaderc/shaderc.h>
 import "C"
 import (

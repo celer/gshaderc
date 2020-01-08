@@ -6,7 +6,7 @@ The goal in providing this wrapper primarly is for allowing golang vulkan applic
 
 # Getting started
 
- * You'll need to install and compile https://github.com/google/shaderc 
+ * You'll need to install and compile https://github.com/google/shaderc *
  * go get github.com/celer/gsharderc
 
 # Example
@@ -36,4 +36,9 @@ The goal in providing this wrapper primarly is for allowing golang vulkan applic
 
 ```
 
+See cmd/glslc.go for a basic example
+
+# Foot notes
+
+Tested against commit 0b9a2992c73d41debe4924d9f39260f773b5840a
 
