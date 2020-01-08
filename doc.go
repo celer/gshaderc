@@ -12,20 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+// Package gshaderc provides an API wrapper around https://github.com/google/shaderc
+// the primary goal being to allow opengl and vulkan based go applications to
+// have the ability to compile shaders into SPIRV (https://en.wikipedia.org/wiki/Standard_Portable_Intermediate_Representation)
+//
+// With the release of Vulkan ( https://www.khronos.org/vulkan/ ) the ability to compile
+// shaders is no longer directly provided with the Vulkan API as it was previously provided
+// as part of the OpenGL APIs.
+//
 package gshaderc
-
-// #cgo LDFLAGS: -lshaderc_combined -lstdc++
-// #include <shaderc/shaderc.h>
-import "C"
-import (
-	"fmt"
-)
-
-var InvalidStageError = fmt.Errorf("invalid stage")
-var CompilationError = fmt.Errorf("compilation error")
-var InternalError = fmt.Errorf("internal error")
-var NullResultObjectError = fmt.Errorf("null result object error")
-var InvalidAssemblyError = fmt.Errorf("invalid assembly error")
-var ValidationError = fmt.Errorf("validation error")
-var TransformationError = fmt.Errorf("transformation error")
-var ConfigurationError = fmt.Errorf("configuration error")
