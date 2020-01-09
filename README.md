@@ -1,4 +1,4 @@
-[![GoDoc](https://godoc.org/github.com/celer/gshaderc?status.svg)](https://godoc.org/github.com/celer/gshaderc)
+[![GoDoc](https://godoc.org/github.com/celer/gshaderc?status.svg)](https://godoc.org/github.com/celer/gshaderc) [![Go Report Card](https://goreportcard.com/badge/github.com/celer/gshaderc)](https://goreportcard.com/report/github.com/celer/gshaderc)
 
 # Introduction
 
