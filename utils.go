@@ -34,8 +34,6 @@ func CompileShader(source, filename, target string) ([]byte, error) {
 		options.SetTargetByName(TargetVulkan11)
 	}
 
-	options.SetOptimizationLevel(Performance)
-
 	result := compiler.CompileIntoSPV(source, shaderType, filename, "main", options)
 	defer result.Release()
 
@@ -58,8 +56,10 @@ func (c *CompilerOptions) SetTargetByName(target string) error {
 		c.SetTargetEnv(OpenGLCompat, OpenGL_4_5)
 	case TargetWebGPU:
 		c.SetTargetEnv(WebGPU, WebGPUAll)
+	default:
+		return fmt.Errorf("unknown target: %s", target)
 	}
-	return fmt.Errorf("unknown target: %s", target)
+	return nil
 }
 
 func GetShaderExtensionByType(stype ShaderType) string {
