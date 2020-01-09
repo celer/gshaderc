@@ -9,27 +9,8 @@ The goal in providing this wrapper primarily is for allowing golang Vulkan appli
 # Getting started
 
  * You'll need to install and compile https://github.com/google/shaderc [1]
- * go get github.com/celer/gshaderc
+ * go get -u github.com/celer/gshaderc
 
-# Tools
-
-There cmd/gsc.go is a tool to either manually or automatically compile shaders based off of changes. The default output name is to 
-append .spv to compile files, and it will look for the extensions .vert, .frag, .comp, .tesc, .geom and .tese and automatically compile
-these files into shaders for the given target when they change.
-
-```shell
-celer@bear:~/go/src/github.com/celer/vkg/examples/sdf$ gsc -watch shaders/
-2020/01/08 18:35:23 watching directory shaders/ for changes
-shaders/sdf.comp:336: error: '' :  syntax error, unexpected INT, expecting COMMA or SEMICOLON
-2020/01/08 18:35:26 error compiling shader 'shaders/sdf.comp': compilation error
-shaders/sdf.comp:336: error: '' :  syntax error, unexpected INT, expecting COMMA or SEMICOLON
-2020/01/08 18:35:26 error compiling shader 'shaders/sdf.comp': compilation error
-shaders/sdf.comp:336: error: '' :  syntax error, unexpected INT, expecting COMMA or SEMICOLON
-2020/01/08 18:35:26 error compiling shader 'shaders/sdf.comp': compilation error
-shaders/sdf.comp:341: error: '' :  syntax error, unexpected SEMICOLON, expecting LEFT_PAREN
-2020/01/08 18:35:27 error compiling shader 'shaders/sdf.comp': compilation error
-2020/01/08 18:35:27 compiled shaders/sdf.comp -> shaders/sdf.comp.spv
-```
 
 # Examples
 
@@ -69,6 +50,26 @@ Here is a more complex example:
 		panic(result.Error())
 	}
 
+```
+
+# Tools
+
+There cmd/gsc.go is a tool to either manually or automatically compile shaders based off of changes. The default output name is to 
+append .spv to compile files, and it will look for the extensions .vert, .frag, .comp, .tesc, .geom and .tese and automatically compile
+these files into shaders for the given target when they change.
+
+```console
+celer@bear:~/go/src/github.com/celer/vkg/examples/sdf$ gsc -watch shaders/
+2020/01/08 18:35:23 watching directory shaders/ for changes
+shaders/sdf.comp:336: error: '' :  syntax error, unexpected INT, expecting COMMA or SEMICOLON
+2020/01/08 18:35:26 error compiling shader 'shaders/sdf.comp': compilation error
+shaders/sdf.comp:336: error: '' :  syntax error, unexpected INT, expecting COMMA or SEMICOLON
+2020/01/08 18:35:26 error compiling shader 'shaders/sdf.comp': compilation error
+shaders/sdf.comp:336: error: '' :  syntax error, unexpected INT, expecting COMMA or SEMICOLON
+2020/01/08 18:35:26 error compiling shader 'shaders/sdf.comp': compilation error
+shaders/sdf.comp:341: error: '' :  syntax error, unexpected SEMICOLON, expecting LEFT_PAREN
+2020/01/08 18:35:27 error compiling shader 'shaders/sdf.comp': compilation error
+2020/01/08 18:35:27 compiled shaders/sdf.comp -> shaders/sdf.comp.spv
 ```
 
 See cmd/gshaderc_compiler.go for a basic example
