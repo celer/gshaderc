@@ -17,38 +17,38 @@ The goal in providing this wrapper primarily is for allowing golang Vulkan appli
 Here is the simplest example:
 
 ```go
-	source := "#version 450\nvoid main() {}"
-	// This will assume you're targeting Vulkan, with an entry point of 'main' and infers the shader type based upon filename
-	data, err := CompileShader(source, "main.vert", "")
+source := "#version 450\nvoid main() {}"
+// This will assume you're targeting Vulkan, with an entry point of 'main' and infers the shader type based upon filename
+data, err := CompileShader(source, "main.vert", "")
 
 ```
 
 Here is a more complex example:
 
 ```go
-	options := gs.NewCompilerOptions()
-	defer options.Release()
-	compiler := gs.NewCompiler()
-	defer compiler.Release()
-	data, err := ioutil.ReadFile(*input)
+options := gs.NewCompilerOptions()
+defer options.Release()
+compiler := gs.NewCompiler()
+defer compiler.Release()
+data, err := ioutil.ReadFile(*input)
 
+if err != nil {
+	panic(err)
+}
+
+options.SetOptimizationLevel(gs.Performance)
+
+result := compiler.CompileIntoSPV(string(data), shaderType, filename, entryPoint, options)
+defer result.Release()
+
+if result.Error() == nil {
+	err := ioutil.WriteFile("output", result.Bytes(), 0644)
 	if err != nil {
 		panic(err)
 	}
-
-	options.SetOptimizationLevel(gs.Performance)
-
-	result := compiler.CompileIntoSPV(string(data), shaderType, filename, entryPoint, options)
-	defer result.Release()
-
-	if result.Error() == nil {
-		err := ioutil.WriteFile("output", result.Bytes(), 0644)
-		if err != nil {
-			panic(err)
-		}
-	} else {
-		panic(result.Error())
-	}
+} else {
+	panic(result.Error())
+}
 
 ```
 
@@ -72,7 +72,7 @@ shaders/sdf.comp:341: error: '' :  syntax error, unexpected SEMICOLON, expecting
 2020/01/08 18:35:27 compiled shaders/sdf.comp -> shaders/sdf.comp.spv
 ```
 
-See cmd/gshaderc_compiler.go for a basic example
+See cmd/gsc.go for a basic example
 
 # Foot notes
 
