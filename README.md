@@ -1,8 +1,9 @@
+
 # Introduction
 
 Gshaderc is a golang wrapper to for https://github.com/google/shaderc. It's a pretty straight forward mapping of the C API
 
-The goal in providing this wrapper primarly is for allowing golang vulkan applications to compile shaders as need.
+The goal in providing this wrapper primarily is for allowing golang Vulkan applications to compile shaders as need.
 
 # Getting started
 
@@ -31,11 +32,11 @@ shaders/sdf.comp:341: error: '' :  syntax error, unexpected SEMICOLON, expecting
 
 # Examples
 
-Here is the simplist example:
+Here is the simplest example:
 
 ```go
 	source := "#version 450\nvoid main() {}"
-	// This will assume you're targeting vulkan, with an entry point of 'main' and infers the shader type based upon filename
+	// This will assume you're targeting Vulkan, with an entry point of 'main' and infers the shader type based upon filename
 	data, err := CompileShader(source, "main.vert", "")
 
 ```
