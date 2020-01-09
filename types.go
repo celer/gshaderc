@@ -28,7 +28,7 @@ const (
 	ComputeShader                   = ShaderType(C.shaderc_compute_shader)
 	GeometryShader                  = ShaderType(C.shaderc_geometry_shader)
 	TessControlShader               = ShaderType(C.shaderc_tess_control_shader)
-	TessEcaluationShader            = ShaderType(C.shaderc_tess_evaluation_shader)
+	TessEvaluationShader            = ShaderType(C.shaderc_tess_evaluation_shader)
 	// Deduce the shader kind from #pragma annotation in the source code. Compiler
 	// will emit error if #pragma annotation is not found.
 	InferFromSource = ShaderType(C.shaderc_glsl_infer_from_source)
@@ -65,7 +65,7 @@ const (
 	Vulkan_1_0 EnvVersion = EnvVersion(C.shaderc_env_version_vulkan_1_0)
 	Vulkan_1_1            = EnvVersion(C.shaderc_env_version_vulkan_1_1)
 	OpenGL_4_5            = EnvVersion(C.shaderc_env_version_opengl_4_5)
-	WebGPUEnv             = EnvVersion(C.shaderc_env_version_webgpu)
+	WebGPUAll             = EnvVersion(C.shaderc_env_version_webgpu)
 )
 
 type SPIRVVersion int

@@ -18,13 +18,14 @@ import (
 	"flag"
 	"fmt"
 	"io/ioutil"
+	"log"
 	"os"
-	"path/filepath"
 	"strings"
 
 	gs "github.com/celer/gshaderc"
 )
 
+var target = flag.String("target", "vulkan_1_1", "specify compilation target (vulkan_1_0, vulkan_1_1, opengl, opengl_compat, webgpu)")
 var input = flag.String("input", "", "input shader to compile")
 var entryPoint = flag.String("entry-point", "main", "entry point to the shader")
 var forSize = flag.Bool("optimize-size", false, "optimize for size")
@@ -44,26 +45,16 @@ func main() {
 	compiler := gs.NewCompiler()
 	defer compiler.Release()
 
-	ext := filepath.Ext(*input)
+	shaderType := gs.GetShaderTypeByFilename(*input)
+	prefix := gs.GetShaderExtensionByType(shaderType)
 
-	shaderType := gs.InferFromSource
-
-	prefix := ""
-
-	switch ext {
-	case ".frag":
-		shaderType = gs.FragmentShader
-		prefix = "frag."
-	case ".vert":
-		shaderType = gs.VertexShader
-		prefix = "vert."
-	case ".comp":
-		shaderType = gs.ComputeShader
-		prefix = "comp."
-	case ".geom":
-		shaderType = gs.GeometryShader
-		prefix = "geom."
+	err := options.SetTargetByName(*target)
+	if err != nil {
+		log.Printf("error: %w", err)
+		os.Exit(-5)
 	}
+
+	log.Printf("Target: %s", *target)
 
 	if *forSize {
 		options.SetOptimizationLevel(gs.Size)
@@ -73,7 +64,7 @@ func main() {
 
 	data, err := ioutil.ReadFile(*input)
 	if err != nil {
-		fmt.Printf("error reading file: %v\n", err)
+		log.Printf("error reading file: %v\n", err)
 		os.Exit(-2)
 	}
 
@@ -84,12 +75,14 @@ func main() {
 		name := strings.Split(*input, ".")
 		err := ioutil.WriteFile(prefix+name[0], result.Bytes(), 0644)
 		if err != nil {
-			fmt.Printf("error writing output: %v", err)
+			log.Printf("error writing output: %v", err)
 			os.Exit(-3)
 		}
+		os.Exit(0)
 	} else {
-		fmt.Printf("error compiling shader: %v\n", result.Error())
-		fmt.Printf("error compiling shader: %s\n", result.ErrorMessage())
+		log.Printf("error compiling shader: %v\n", result.Error())
+		fmt.Printf("%s\n", result.ErrorMessage())
+		os.Exit(-4)
 	}
 
 }

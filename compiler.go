@@ -57,7 +57,7 @@ func (c *Compiler) CompileIntoSPV(source string, shaderType ShaderType, inputFil
 	cr.result = C.shaderc_compile_into_spv(c.compiler,
 		C.CString(source),
 		C.ulong(len(source)),
-		C.shaderc_glsl_vertex_shader,
+		C.shaderc_shader_kind(shaderType),
 		C.CString(inputFilename),
 		C.CString(entryPoint), options.options)
 	return cr
@@ -72,7 +72,7 @@ func (c *Compiler) CompileIntoPreProcessedText(source string, shaderType ShaderT
 	cr.result = C.shaderc_compile_into_preprocessed_text(c.compiler,
 		C.CString(source),
 		C.ulong(len(source)),
-		C.shaderc_glsl_vertex_shader,
+		C.shaderc_shader_kind(shaderType),
 		C.CString(inputFilename),
 		C.CString(entryPoint), options.options)
 	return cr

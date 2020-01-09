@@ -53,6 +53,23 @@ func TestCompilerInclude(t *testing.T) {
 
 }
 
+func TestCompilerSimple(t *testing.T) {
+	badSource := "void main(){}"
+	_, err := CompileShader(badSource, "main.vert", "")
+	if err != CompilationError {
+		t.Fatal("Expected compilation error")
+	}
+
+	goodSource := "#version 450\nvoid main() {}"
+	d, err := CompileShader(goodSource, "main.vert", "")
+	if err != nil {
+		t.Fatal("Didn't expect a compilation error")
+	}
+	if d == nil || len(d) == 0 {
+		t.Fatal("Expected a binary result")
+	}
+}
+
 func TestCompiler(t *testing.T) {
 	options := NewCompilerOptions()
 	compiler := NewCompiler()

@@ -6,10 +6,21 @@ The goal in providing this wrapper primarly is for allowing golang vulkan applic
 
 # Getting started
 
- * You'll need to install and compile https://github.com/google/shaderc *
+ * You'll need to install and compile https://github.com/google/shaderc [1]
  * go get github.com/celer/gsharderc
 
-# Example
+# Examples
+
+Here is the simplist example:
+
+```go
+	source := "#version 450\nvoid main() {}"
+	// This will assume you're targeting vulkan, with an entry point of 'main' and infers the shader type based upon filename
+	data, err := CompileShader(source, "main.vert", "")
+
+```
+
+Here is a more complex example:
 
 ```go
 	options := gs.NewCompilerOptions()
@@ -22,7 +33,9 @@ The goal in providing this wrapper primarly is for allowing golang vulkan applic
 		panic(err)
 	}
 
-	result := compiler.CompileIntoSPV(string(data), shaderType, *input, *entryPoint, options)
+	options.SetOptimizationLevel(gs.Performance)
+
+	result := compiler.CompileIntoSPV(string(data), shaderType, filename, entryPoint, options)
 	defer result.Release()
 
 	if result.Error() == nil {
@@ -36,9 +49,9 @@ The goal in providing this wrapper primarly is for allowing golang vulkan applic
 
 ```
 
-See cmd/glslc.go for a basic example
+See cmd/gshaderc_compiler.go for a basic example
 
 # Foot notes
 
-Tested against commit 0b9a2992c73d41debe4924d9f39260f773b5840a
+[1] Tested against commit 0b9a2992c73d41debe4924d9f39260f773b5840a
 
