@@ -1,3 +1,4 @@
+[![GoDoc](https://godoc.org/github.com/celer/gshaderc?status.svg)](https://godoc.org/github.com/celer/gshaderc)
 
 # Introduction
 
